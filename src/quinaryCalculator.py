@@ -20,6 +20,15 @@ def quinaryCalculator(expression):
     elif "/" in expression:
         firstNumber, secondNumber = [x.strip() for x in expression.split("/")]
         output = quinaryDivision(firstNumber,secondNumber)
+    
+    elif "^2" in expression:
+        firstNumber = [x.strip() for x in expression.split("^2")]
+        output = quinarySquare(firstNumber,secondNumber)
+    
+    elif "√" in expression:
+        firstNumber = [x.strip() for x in expression.split("^2")]
+        output = quinarySquareRoot(firstNumber)
+
 
     return output
 
@@ -72,6 +81,28 @@ def quinaryDivision(firstNumber,secondNumber):
     return convertDecimalToQuinary(firstNumberConverted // secondNumberConverted)
 
 
+def quinarySquare(firstNumber):
+    """
+    Takes in a number in in Quinary, converts
+    them to decimal, then squares it and returns
+    the anwser in quinary. 
+    """
+    firstNumberConverted = convertQuinaryToDecimal(firstNumber)
+
+    return convertDecimalToQuinary(firstNumberConverted ** 2)
+
+
+def quinarySquareRoot(firstNumber):
+    """
+    Takes in a number in in Quinary, converts
+    them to decimal, then find the square root and returns
+    the anwser in quinary. 
+    """
+    firstNumberConverted = convertQuinaryToDecimal(firstNumber)
+
+    return convertDecimalToQuinary(firstNumberConverted ** (1/2))
+
+
 def convertQuinaryToDecimal(initialNumber):
     """
     Takes in a quinary number and converts it to decimal
@@ -110,6 +141,8 @@ def main():
     assert "131" == quinaryCalculator("324 - 143")
     assert "432" == quinaryCalculator("23 * 14")
     assert "13" == quinaryCalculator("432 / 24")
+    assert "1134" == quinarySquare("23")
+    assert "23" == quinarySquareRoot("1134")
 
 
 if __name__ == "__main__":

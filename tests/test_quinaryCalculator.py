@@ -1,5 +1,5 @@
 import unittest
-from nolanMain import quinaryCalculator as gc
+from src import quinaryCalculator as gc
 
 class TestQuinaryCalculatorOperations(unittest.TestCase):
 

@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from src.quinaryCalculator import quinaryAddition, quinarySubtraction, quinaryMultiplication, quinaryDivision, quinarySquare, quinarySquareRoot, convertQuinaryToDecimal, convertDecimalToQuinary
 
 window = tk.Tk()
@@ -17,10 +18,14 @@ display.grid(row=0, column=0, columnspan=5, sticky="ew")
 
 def on_number_click(number):
     global current_input
-    if current_input == "0" or current_input == "Error":
-        current_input = str(number)
-    else:
-        current_input += str(number)
+    try:
+        if current_input == "0" or current_input == "Error":
+            current_input = str(number)
+        else:
+            current_input += str(number)
+    except TypeError:
+        messagebox.showinfo(title="TypeError", message="Please press Clear (C) before continuing. \nTry entering your inputs in a different order.")
+
     update_display(current_input)
 
 def on_operator_click(op):

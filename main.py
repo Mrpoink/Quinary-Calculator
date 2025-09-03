@@ -1,5 +1,5 @@
 import tkinter as tk
-from quinary_logic import add, subtract, multiply, divide, square, square_root, quinary_to_decimal, decimal_to_quinary
+from src.quinaryCalculator import quinaryAddition, quinarySubtraction, quinaryMultiplication, quinaryDivision, quinarySquare, quinarySquareRoot, convertQuinaryToDecimal, convertDecimalToQuinary
 
 window = tk.Tk()
 window.title("Quinary Calculator")
@@ -34,10 +34,10 @@ def on_equals_click():
     if first_operand and operator and current_input:
         second_operand = current_input
         result = ""
-        if operator == '+': result = add(first_operand, second_operand)
-        elif operator == '-': result = subtract(first_operand, second_operand)
-        elif operator == '*': result = multiply(first_operand, second_operand)
-        elif operator == '/': result = divide(first_operand, second_operand)
+        if operator == '+': result = quinaryAddition(first_operand, second_operand)
+        elif operator == '-': result = quinarySubtraction(first_operand, second_operand)
+        elif operator == '*': result = quinaryMultiplication(first_operand, second_operand)
+        elif operator == '/': result = quinaryDivision(first_operand, second_operand)
         
         update_display(result)
         current_input = result
@@ -46,8 +46,8 @@ def on_equals_click():
 
 def on_unary_operator_click(op):
     global current_input
-    if op == 'sqrt': result = square_root(current_input)
-    elif op == 'sq': result = square(current_input)
+    if op == 'sqrt': result = quinarySquareRoot(current_input)
+    elif op == 'sq': result = quinarySquare(current_input)
     elif op == 'C': result = "0"
     else: return
         
@@ -65,7 +65,7 @@ def update_display(value):
     if value == "Error":
         display.config(text=value)
     elif is_decimal_mode:
-        display.config(text=str(quinary_to_decimal(value)))
+        display.config(text=str(convertQuinaryToDecimal(value)))
     else:
         display.config(text=value)
 

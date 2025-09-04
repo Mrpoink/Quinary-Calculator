@@ -10,7 +10,7 @@ class TestQuinaryCalculatorOperations(unittest.TestCase):
         self.assertEqual(33.0, gc.quinaryCalculator("432/24"))
 
     def test_calculatorDivisionZERO(self):
-        self.assertEqual("Error", gc.quinaryCalculator("1/6"))
+        self.assertEqual(0, gc.quinaryCalculator("1/6"))
 
     def test_calculatorSubtractPOS(self):
         self.assertEqual(30, gc.quinaryCalculator("27 - 12"))

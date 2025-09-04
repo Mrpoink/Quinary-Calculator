@@ -83,13 +83,13 @@ def convertQuinaryToDecimal(initialNumber):
     if negative: 
         return -convertedNumber
     else:
-        return convertedNumber
+        return int(convertedNumber)
 
 
 def convertDecimalToQuinary(initialNumber):
     initialNumber = int(initialNumber)
     if initialNumber == 0:
-        return "0"
+        return 0
     
     if initialNumber == 'Error':
         return 'Error'
@@ -104,7 +104,7 @@ def convertDecimalToQuinary(initialNumber):
     quinary = ''.join(reversed(digits))
     
     if(initialNumber < 0):
-        return ('-' + quinary)
+        return int('-' + quinary)
     else:
-        return quinary
+        return int(quinary)
 

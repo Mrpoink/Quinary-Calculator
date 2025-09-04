@@ -1,167 +1,101 @@
 def quinaryCalculator(expression):
-    """
-    Takes a string in the format a + b. Returns
-    the appropriate quinary calculation.
-    """
     output = None
-
     if "+" in expression:
         firstNumber, secondNumber = [x.strip() for x in expression.split("+")]
-        output = quinaryAddition(firstNumber,secondNumber)
-    
+        output = quinaryAddition(firstNumber, secondNumber)
     elif "-" in expression:
         firstNumber, secondNumber = [x.strip() for x in expression.split("-")]
-        output = quinarySubtraction(firstNumber,secondNumber)
-    
+        output = quinarySubtraction(firstNumber, secondNumber)
     elif "*" in expression:
         firstNumber, secondNumber = [x.strip() for x in expression.split("*")]
-        output = quinaryMultiplication(firstNumber,secondNumber)
-    
+        output = quinaryMultiplication(firstNumber, secondNumber)
     elif "/" in expression:
         firstNumber, secondNumber = [x.strip() for x in expression.split("/")]
-        output = quinaryDivision(firstNumber,secondNumber)
-    
+        output = quinaryDivision(firstNumber, secondNumber)
     elif "^2" in expression:
         firstNumber = [x.strip() for x in expression.split("^2")]
         output = quinarySquare(firstNumber[0])
-    
     elif "√" in expression:
         firstNumber = [x.strip() for x in expression.split("√")]
         output = quinarySquareRoot(firstNumber[1])
-
-
     return output
 
 
-def quinaryAddition(firstNumber,secondNumber):
-    """
-    Takes in two numbers in Quinary, converts
-    them to decimal, then adds them together and 
-    returns the anwser in Quinary
-    """
-
-    return convertDecimalToQuinary(int(firstNumber) + int(secondNumber))
+def quinaryAddition(firstNumber, secondNumber):
+    return convertDecimalToQuinary(
+        convertQuinaryToDecimal(firstNumber) + convertQuinaryToDecimal(secondNumber)
+    )
 
 
-def quinarySubtraction(firstNumber,secondNumber):
-    """
-    Takes in two numbers in Quinary, converts
-    them to decimal, then subtracts them and 
-    returns the anwser in Quinary
-    """
-
-    return convertDecimalToQuinary(int(firstNumber) - int(secondNumber))
+def quinarySubtraction(firstNumber, secondNumber):
+    return convertDecimalToQuinary(
+        convertQuinaryToDecimal(firstNumber) - convertQuinaryToDecimal(secondNumber)
+    )
 
 
-def quinaryMultiplication(firstNumber,secondNumber):
-    """
-    Takes in two numbers in Quinary, converts
-    them to decimal, then multiplies them and 
-    returns the anwser in Quinary
-    """
-
-    return convertDecimalToQuinary(int(firstNumber) * int(secondNumber))
+def quinaryMultiplication(firstNumber, secondNumber):
+    return convertDecimalToQuinary(
+        convertQuinaryToDecimal(firstNumber) * convertQuinaryToDecimal(secondNumber)
+    )
 
 
-def quinaryDivision(firstNumber,secondNumber):
-    """
-    Takes in two numbers in Quinary, converts
-    them to decimal, then divides them and 
-    returns the anwser in Quinary
-    """
+def quinaryDivision(firstNumber, secondNumber):
+    firstNumberConverted = convertQuinaryToDecimal(firstNumber)
+    secondNumberConverted = convertQuinaryToDecimal(secondNumber)
 
-    firstNumber = int(firstNumber)
-    secondNumber = int(secondNumber)
-
-    initialNumber = firstNumber / secondNumber
-
-    total = ''
-
-    if initialNumber < 1:
-
-        remainder = firstNumber
-
-        for i in range(4):
-
-            firstNumber = remainder * 5
-            quotient, remainder = divmod(firstNumber, secondNumber)
-            total = total + str(int(quotient))
-
-        return float( '0' + '.' + total)
-
-    else:
-
-        decimal_halves = str(initialNumber).split('.')
-
-        integer = convertDecimalToQuinary(int(decimal_halves[0]))
-        fractal = convertDecimalToQuinary(int(decimal_halves[1]))
-
-        return float(str(integer) + '.' + str(fractal))
+    return convertDecimalToQuinary(firstNumberConverted // secondNumberConverted)
 
 
 def quinarySquare(firstNumber):
-    """
-    Takes in a number in in Quinary, converts
-    them to decimal, then squares it and returns
-    the anwser in quinary. 
-    """
-    firstNumberConverted = convertDecimalToQuinary(int(firstNumber) ** 2)
-
-    return firstNumberConverted
+    num = convertQuinaryToDecimal(firstNumber)
+    return convertDecimalToQuinary(num ** 2)
 
 
 def quinarySquareRoot(firstNumber):
-    """
-    Takes in a number in in Quinary, converts
-    them to decimal, then find the square root and returns
-    the anwser in quinary. 
-    """
-
-    return convertDecimalToQuinary(int(firstNumber) ** (1/2))
+    num = convertQuinaryToDecimal(firstNumber)
+    root = int(num ** 0.5)
+    if root * root != num:
+        return "Error"
+    return convertDecimalToQuinary(root)
 
 
 def convertQuinaryToDecimal(initialNumber):
-    """
-    Takes in a quinary number and converts it to decimal
-    """
-    quotient = int(initialNumber)
-    converetdNumber = 0
-    exponent = 0
-
-    while quotient != 0:
-        converetdNumber += (pow(5,exponent) * (quotient % 10))
-        quotient = quotient // 10
-        exponent += 1
+    initial_str = str(initialNumber).strip()
     
-    return converetdNumber
+    negative = initial_str.startswith('-')
+    if negative:
+        initial_str = initial_str[1:]
+
+    convertedNumber = 0
+    exponent = 0
+    for digit in reversed(initial_str):
+        if digit not in "01234":
+            return "Error"
+        convertedNumber += int(digit) * (5 ** exponent)
+        exponent += 1
+
+
+    if negative: 
+        return -convertedNumber
+    else:
+        return convertedNumber
 
 
 def convertDecimalToQuinary(initialNumber):
-    """
-    Takes in a decimal number and converts it 
-    to Quinary
-    """
+    if initialNumber == 0:
+        return "0"
 
-    negative = False
-    quotient = 1
-    initial_num = int(initialNumber)
-    convertedNumber = ''
+    initial_num = abs(int(initialNumber))
+    digits = []
 
-    if int(initialNumber) < 0:
-        negative = True
-        initial_num = int(initialNumber) * -1
+    while initial_num > 0:
+        initial_num, remainder = divmod(initial_num, 5)
+        digits.append(str(remainder))
 
-    while not (quotient <= 0):
-
-        quotient, remainder = divmod(initial_num, 5)
-
-        convertedNumber = convertedNumber + str(remainder)
-
-        initial_num = quotient
-
-    convertedNumber = int(convertedNumber[::-1])
-
-    if negative == True:
-        convertedNumber = convertedNumber * -1
+    quinary = ''.join(reversed(digits))
     
-    return convertedNumber
+    if(initialNumber < 0):
+        return ('-' + quinary)
+    else:
+        return quinary
+

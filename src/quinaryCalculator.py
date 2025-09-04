@@ -40,13 +40,10 @@ def quinaryMultiplication(firstNumber, secondNumber):
 
 
 def quinaryDivision(firstNumber, secondNumber):
-    a = convertQuinaryToDecimal(firstNumber)
-    b = convertQuinaryToDecimal(secondNumber)
-    if b == 0:
-        return "Error"
-    if a % b != 0:
-        return "Error"
-    return convertDecimalToQuinary(a // b)
+    firstNumberConverted = convertQuinaryToDecimal(firstNumber)
+    secondNumberConverted = convertQuinaryToDecimal(secondNumber)
+
+    return convertDecimalToQuinary(firstNumberConverted // secondNumberConverted)
 
 
 def quinarySquare(firstNumber):

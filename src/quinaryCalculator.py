@@ -60,30 +60,42 @@ def quinarySquareRoot(firstNumber):
 
 
 def convertQuinaryToDecimal(initialNumber):
-    quotient = int(initialNumber)
+    initial_str = str(initialNumber).strip()
+    
+    negative = initial_str.startswith('-')
+    if negative:
+        initial_str = initial_str[1:]
+
     convertedNumber = 0
     exponent = 0
-    while quotient != 0:
-        convertedNumber += (pow(5, exponent) * (quotient % 10))
-        quotient = quotient // 10
+    for digit in reversed(initial_str):
+        if digit not in "01234":
+            return "Error"
+        convertedNumber += int(digit) * (5 ** exponent)
         exponent += 1
-    return convertedNumber
+
+
+    if negative: 
+        return -convertedNumber
+    else:
+        return convertedNumber
 
 
 def convertDecimalToQuinary(initialNumber):
-    negative = False
-    quotient = 1
-    initial_num = int(initialNumber)
-    convertedNumber = ''
-    if initial_num < 0:
-        negative = True
-        initial_num = abs(initial_num)
-    while not (quotient <= 0):
-        quotient, remainder = divmod(initial_num, 5)
-        convertedNumber = convertedNumber + str(remainder)
-        initial_num = quotient
-    convertedNumber = int(convertedNumber[::-1])
-    if negative:
-        convertedNumber = -convertedNumber
-    return convertedNumber
+    if initialNumber == 0:
+        return "0"
+
+    initial_num = abs(int(initialNumber))
+    digits = []
+
+    while initial_num > 0:
+        initial_num, remainder = divmod(initial_num, 5)
+        digits.append(str(remainder))
+
+    quinary = ''.join(reversed(digits))
+    
+    if(initialNumber < 0):
+        return ('-' + quinary)
+    else:
+        return quinary
 

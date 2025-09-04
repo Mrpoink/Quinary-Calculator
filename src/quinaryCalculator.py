@@ -28,8 +28,12 @@ def quinaryAddition(firstNumber, secondNumber):
 
 
 def quinarySubtraction(firstNumber, secondNumber):
+
+    firstNumber = int(firstNumber)
+    secondNumber = int(secondNumber)
+    
     return convertDecimalToQuinary(
-        convertQuinaryToDecimal(firstNumber) - convertQuinaryToDecimal(secondNumber)
+        firstNumber - secondNumber
     )
 
 
@@ -43,7 +47,7 @@ def quinaryDivision(firstNumber, secondNumber):
     firstNumberConverted = convertQuinaryToDecimal(firstNumber)
     secondNumberConverted = convertQuinaryToDecimal(secondNumber)
 
-    return convertDecimalToQuinary(firstNumberConverted // secondNumberConverted)
+    return convertDecimalToQuinary(firstNumberConverted / secondNumberConverted)
 
 
 def quinarySquare(firstNumber):
@@ -53,7 +57,9 @@ def quinarySquare(firstNumber):
 
 def quinarySquareRoot(firstNumber):
     num = convertQuinaryToDecimal(firstNumber)
-    root = int(num ** 0.5)
+    if num == 'Error':
+        return 'Error'
+    root = int(int(num) ** 0.5)
     if root * root != num:
         return "Error"
     return convertDecimalToQuinary(root)
@@ -74,7 +80,6 @@ def convertQuinaryToDecimal(initialNumber):
         convertedNumber += int(digit) * (5 ** exponent)
         exponent += 1
 
-
     if negative: 
         return -convertedNumber
     else:
@@ -82,10 +87,14 @@ def convertQuinaryToDecimal(initialNumber):
 
 
 def convertDecimalToQuinary(initialNumber):
+    initialNumber = int(initialNumber)
     if initialNumber == 0:
         return "0"
+    
+    if initialNumber == 'Error':
+        return 'Error'
 
-    initial_num = abs(int(initialNumber))
+    initial_num = abs(initialNumber)
     digits = []
 
     while initial_num > 0:

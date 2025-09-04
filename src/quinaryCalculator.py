@@ -22,24 +22,32 @@ def quinaryCalculator(expression):
 
 
 def quinaryAddition(firstNumber, secondNumber):
+    firstNumber = int(firstNumber)
+    secondNumber = int(secondNumber)
     return convertDecimalToQuinary(
         convertQuinaryToDecimal(firstNumber) + convertQuinaryToDecimal(secondNumber)
     )
 
 
 def quinarySubtraction(firstNumber, secondNumber):
+    firstNumber = int(firstNumber)
+    secondNumber = int(secondNumber)
     return convertDecimalToQuinary(
         convertQuinaryToDecimal(firstNumber) - convertQuinaryToDecimal(secondNumber)
     )
 
 
 def quinaryMultiplication(firstNumber, secondNumber):
+    firstNumber = int(firstNumber)
+    secondNumber = int(secondNumber)
     return convertDecimalToQuinary(
         convertQuinaryToDecimal(firstNumber) * convertQuinaryToDecimal(secondNumber)
     )
 
 
 def quinaryDivision(firstNumber, secondNumber):
+    firstNumber = int(firstNumber)
+    secondNumber = int(secondNumber)
     firstNumberConverted = convertQuinaryToDecimal(firstNumber)
     secondNumberConverted = convertQuinaryToDecimal(secondNumber)
 
@@ -47,11 +55,13 @@ def quinaryDivision(firstNumber, secondNumber):
 
 
 def quinarySquare(firstNumber):
+    firstNumber = int(firstNumber)
     num = convertQuinaryToDecimal(firstNumber)
     return convertDecimalToQuinary(num ** 2)
 
 
 def quinarySquareRoot(firstNumber):
+    firstNumber = int(firstNumber)
     num = convertQuinaryToDecimal(firstNumber)
     root = int(num ** 0.5)
     if root * root != num:

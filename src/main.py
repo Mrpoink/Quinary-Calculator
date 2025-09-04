@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from src.quinaryCalculator import quinaryAddition, quinarySubtraction, quinaryMultiplication, quinaryDivision, quinarySquare, quinarySquareRoot, convertQuinaryToDecimal, convertDecimalToQuinary
+from quinaryCalculator import quinaryAddition, quinarySubtraction, quinaryMultiplication, quinaryDivision, quinarySquare, quinarySquareRoot, convertQuinaryToDecimal, convertDecimalToQuinary
 
 window = tk.Tk()
 window.title("Quinary Calculator")

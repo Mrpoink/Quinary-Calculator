@@ -4,7 +4,7 @@ from src import quinaryCalculator as gc
 class TestQuinaryCalculatorOperations(unittest.TestCase):
 
     def test_calculatorAddition(self):
-        self.assertEqual(30, gc.quinaryCalculator("12 + 3"))
+        self.assertEqual(20, gc.quinaryCalculator("12 + 3"))
 
     def test_calculatorDivisionONE(self):
         self.assertEqual(33.0, gc.quinaryCalculator("432/24"))

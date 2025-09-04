@@ -32,6 +32,9 @@ class TestQuinaryCalculatorOperations(unittest.TestCase):
 
     def test_calculatorSquareRoot(self):
         self.assertEqual(2, gc.quinaryCalculator("√4"))
+    
+    def test_calculatorDecimalError(self):
+        self.assertEqual('Error', gc("√3"))
 
 
 if __name__ == "__main__":

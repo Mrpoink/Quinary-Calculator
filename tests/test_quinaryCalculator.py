@@ -18,10 +18,10 @@ class TestQuinaryCalculatorOperations(unittest.TestCase):
     def test_calculatorSubtractNEG(self):
         self.assertEqual(-1, gc.quinaryCalculator("1 - 2"))
 
-    def test_calculatorSubtractPOS(self):
+    def test_calculatorSubtractPOS1(self):
         self.assertEqual(2, gc.quinaryCalculator("3 - 1"))
 
-    def test_calculatorSubtractNEG(self):
+    def test_calculatorSubtractNEG1(self):
         self.assertEqual(-2, gc.quinaryCalculator("1 - 3"))
 
     def test_calculatorMultiply(self):

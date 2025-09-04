@@ -1,5 +1,13 @@
 import tkinter as tk
-from src.quinaryCalculator import quinaryAddition, quinarySubtraction, quinaryMultiplication, quinaryDivision, quinarySquare, quinarySquareRoot, convertQuinaryToDecimal, convertDecimalToQuinary
+from src.quinaryCalculator import (
+    quinaryAddition,
+    quinarySubtraction,
+    quinaryMultiplication,
+    quinaryDivision,
+    quinarySquare,
+    quinarySquareRoot,
+    convertQuinaryToDecimal,
+)
 
 window = tk.Tk()
 window.title("Quinary Calculator")
@@ -23,53 +31,65 @@ def on_number_click(number):
         current_input += str(number)
     update_display(current_input)
 
+
 def on_operator_click(op):
     global first_operand, operator, current_input
     first_operand = current_input
     operator = op
     current_input = ""
 
+
 def on_equals_click():
     global first_operand, operator, current_input
     if first_operand and operator and current_input:
         second_operand = current_input
-        result = ""
-        if operator == '+': result = quinaryAddition(first_operand, second_operand)
-        elif operator == '-': result = quinarySubtraction(first_operand, second_operand)
-        elif operator == '*': result = quinaryMultiplication(first_operand, second_operand)
-        elif operator == '/': result = quinaryDivision(first_operand, second_operand)
-        
-        update_display(result)
-        current_input = result
+        result = "Error"
+        if operator == '+':
+            result = quinaryAddition(first_operand, second_operand)
+        elif operator == '-':
+            result = quinarySubtraction(first_operand, second_operand)
+        elif operator == '*':
+            result = quinaryMultiplication(first_operand, second_operand)
+        elif operator == '/':
+            result = quinaryDivision(first_operand, second_operand)
+        current_input = str(result)
+        update_display(current_input)
         first_operand = ""
         operator = ""
 
+
 def on_unary_operator_click(op):
     global current_input
-    if op == 'sqrt': result = quinarySquareRoot(current_input)
-    elif op == 'sq': result = quinarySquare(current_input)
-    elif op == 'C': result = "0"
-    else: return
-        
-    current_input = result
+    result = "Error"
+    if op == 'sqrt':
+        result = quinarySquareRoot(current_input)
+    elif op == 'sq':
+        result = quinarySquare(current_input)
+    elif op == 'C':
+        result = "0"
+    current_input = str(result)
     update_display(current_input)
+
 
 def on_toggle_click():
     global is_decimal_mode
     is_decimal_mode = not is_decimal_mode
     update_display(current_input)
-    
+
+
 def update_display(value):
     global is_decimal_mode
-    # Handle the case where the value is an error string
     if value == "Error":
         display.config(text=value)
     elif is_decimal_mode:
-        display.config(text=str(convertQuinaryToDecimal(value)))
+        try:
+            display.config(text=str(convertQuinaryToDecimal(value)))
+        except:
+            display.config(text="Error")
     else:
         display.config(text=value)
 
-# --- Buttons ---
+
 button_0 = tk.Button(window, text="0", command=lambda: on_number_click(0))
 button_1 = tk.Button(window, text="1", command=lambda: on_number_click(1))
 button_2 = tk.Button(window, text="2", command=lambda: on_number_click(2))
@@ -85,7 +105,6 @@ button_clear = tk.Button(window, text="C", command=lambda: on_unary_operator_cli
 button_square = tk.Button(window, text="x²", command=lambda: on_unary_operator_click('sq'))
 button_sqrt = tk.Button(window, text="√", command=lambda: on_unary_operator_click('sqrt'))
 button_toggle = tk.Button(window, text="Toggle", command=on_toggle_click)
-
 
 button_4.grid(row=1, column=3, padx=5, pady=5)
 button_3.grid(row=1, column=2, padx=5, pady=5)
